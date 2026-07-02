@@ -4,7 +4,12 @@ services:
     build: .
     ports:
       - '8080:8080'
+    volumes:
+      - ./data:/urler/data
     environment:
       BASE_URL: "http://localhost"
-      DATA: /urler/data/
-
+      DATA_FOLDER: /urler/data
+      LOG_FORMAT: "json" # json, text, maybe more in the future
+      # Future
+      # METRICS: "true" # true / false
+      # METRICS_PORT: "<port>" # A non-sudo port (NOT 0-1023)

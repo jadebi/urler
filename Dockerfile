@@ -30,18 +30,27 @@ RUN apk add --no-cache \
   lua5.4 \
   libssl3 \
   libcrypto3 \
-  sqlite-libs
+  sqlite-libs \
+  su-exec
 
-# I believe this makes the image more secure? I could be wrong though, lmk
-USER urler
+RUN adduser -D -h /urler urler 
+
+WORKDIR /urler
+
 # Copy over the nessesary files from the 'builder' container
 COPY --from=builder /urler /urler
 
-WORKDIR /urler
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
 ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;;"
 ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
+
+# Fallbacks (get applied in entrypoint.sh)
+ENV FB_DB_FOLDER="/urler/data"
+
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD ["lua5.4", "start.lua"]
