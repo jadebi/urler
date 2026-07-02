@@ -32,15 +32,7 @@ RUN apk add --no-cache \
   libcrypto3 \
   sqlite-libs
 
-# I believe this makes the image more secure? I could be wrong though, lmk
-# Creating the 'urler' user (no password, no groups, just a simple user) 
-RUN adduser -h /urler -D urler
-# Then we switch to that user!
-USER urler
-
 WORKDIR /urler
-
-# Copy over the nessesary files from the 'builder' container
 COPY --from=builder /urler /urler
 
 EXPOSE 8080
