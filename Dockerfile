@@ -48,11 +48,11 @@ ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.
 ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
 
 # Fallbacks (get applied in entrypoint.sh)
-ENV FB_DATA_FOLDER="/urler/data"
-ENV FB_BASE_URL="http://localhost"
-ENV FB_LOG_FORMAT="text"
-ENV FB_DEBUG="false"
+ENV DEFAULT_DATA_FOLDER="/urler/data"
+ENV DEFAULT_BASE_URL="http://localhost"
+ENV DEFAULT_LOG_FORMAT="text"
+ENV DEFAULT_DEBUG="false"
 
 ENTRYPOINT [ "/urler/entrypoint.sh" ]
 
-CMD ["lua5.4", "start.lua"]
+CMD ["lua5.4", "main.lua"]

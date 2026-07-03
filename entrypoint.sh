@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-# Overwriting with fallback-values in case they
+# Overwriting with default values in case they
 # were not specified in the docker-compose file
-BASE_URL="${BASE_URL:-$FB_BASE_URL}"
-DATA_FOLDER="${DATA_FOLDER:-$FB_DATA_FOLDER}"
-LOG_FORMAT="${LOG_FORMAT:-$FB_LOG_FORMAT}"
-DEBUG="${DEBUG:-$FB_DEBUG}"
+BASE_URL="${BASE_URL:-$DEFAULT_BASE_URL}"
+DATA_FOLDER="${DATA_FOLDER:-$DEFAULT_DATA_FOLDER}"
+LOG_FORMAT="${LOG_FORMAT:-$DEFAULT_LOG_FORMAT}"
+DEBUG="${DEBUG:-$DEFAULT_DEBUG}"
 
 Permissions=$(stat -c "%a" "$DATA_FOLDER")
 UrlerId=$(id -u "urler")
