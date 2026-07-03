@@ -42,3 +42,4 @@ luac.out
 # Files generated with testing / development
 *.db
 data
+*.lnk
