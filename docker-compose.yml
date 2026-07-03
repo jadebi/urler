@@ -8,7 +8,7 @@ services:
       - ./data:/urler/data
     environment:
       BASE_URL: "http://localhost"
-      DATA_FOLDER: /urler/data
+      DATA_FOLDER: "/urler/data"
       LOG_FORMAT: "json" # json, text, maybe more in the future
       DEBUG: "true"
       # Future
