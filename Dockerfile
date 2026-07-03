@@ -51,6 +51,7 @@ ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
 ENV FB_DATA_FOLDER="/urler/data"
 ENV FB_BASE_URL="http://localhost"
 ENV FB_LOG_FORMAT="text"
+ENV FB_DEBUG="false"
 
 ENTRYPOINT [ "/urler/entrypoint.sh" ]
 

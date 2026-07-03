@@ -10,6 +10,7 @@ services:
       BASE_URL: "http://localhost"
       DATA_FOLDER: /urler/data
       LOG_FORMAT: "json" # json, text, maybe more in the future
+      DEBUG: "true"
       # Future
       # METRICS: "true" # true / false
       # METRICS_PORT: "<port>" # A non-sudo port (NOT 0-1023)

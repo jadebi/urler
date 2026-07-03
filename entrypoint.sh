@@ -6,6 +6,7 @@ set -e
 BASE_URL="${BASE_URL:-$FB_BASE_URL}"
 DATA_FOLDER="${DATA_FOLDER:-$FB_DATA_FOLDER}"
 LOG_FORMAT="${LOG_FORMAT:-$FB_LOG_FORMAT}"
+DEBUG="${DEBUG:-$FB_DEBUG}"
 
 Permissions=$(stat -c "%a" "$DATA_FOLDER")
 UrlerId=$(id -u "urler")
