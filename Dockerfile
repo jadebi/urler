@@ -44,7 +44,7 @@ COPY --from=builder /urler /urler
 
 EXPOSE 8080
 
-ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;;"
+ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;/urler/helpers/?.lua;;"
 ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
 
 # Fallbacks (get applied in entrypoint.sh)
