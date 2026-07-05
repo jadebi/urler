@@ -14,6 +14,11 @@ local EnvVariables = {
     Type = "url"
   },
   {
+    VariableName = "Port",
+    EnvName = "PORT",
+    Type = "port"
+  },
+  {
     VariableName = "LogFormat",
     EnvName = "LOG_FORMAT",
     Type = "enum",

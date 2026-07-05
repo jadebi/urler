@@ -23,11 +23,6 @@ RUN luarocks-5.4 install http --tree=lua_rocks && \
 COPY ./entrypoint.sh /urler/entrypoint.sh
 RUN chmod +x /urler/entrypoint.sh
 
-# we do this last so everything else can be cached.
-# This makes builds ALOT faster, because the luarocks
-# installation takes pretty long each time.
-COPY ./src .
-
 
 # This image will run the actual code
 # A small and minimal alpine image with only a few packages
@@ -40,23 +35,31 @@ RUN apk add --no-cache \
   sqlite-libs \
   su-exec
 
-RUN adduser -D -h /urler urler 
-
 WORKDIR /urler
+
+RUN adduser -D -h /urler urler 
 
 EXPOSE 8080
 
+# custom lua paths because we install the rocks in the 
+# working directory instead of globally.
 ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;/urler/helpers/?.lua;;"
 ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
 
 # Fallbacks (get applied in entrypoint.sh)
 ENV DEFAULT_DATA_FOLDER="/urler/data"
 ENV DEFAULT_BASE_URL="http://localhost"
+ENV DEFAULT_PORT="8080"
 ENV DEFAULT_LOG_FORMAT="text"
 ENV DEFAULT_DEBUG="false"
 
-# Copy over the nessesary files from the 'builder' container
+# copy over the nessesary files from the 'builder' container
 COPY --from=builder /urler /urler
+
+# we copy the source files in prod because we dont actually
+# need them in build and this way we can improve build
+# speeds even more! 
+COPY ./src .
 
 ENTRYPOINT [ "/urler/entrypoint.sh" ]
 

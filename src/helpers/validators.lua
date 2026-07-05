@@ -58,6 +58,23 @@ Validators.url = function(Value)
   return nil, "must be a valid HTTP or HTTPS URL"
 end
 
+Validators.port = function(Value)
+  Value = trim(Value)
+  local number = tonumber(Value)
+
+  if not number then -- has to be a number
+    return nil, "must be a number"
+  end
+  if number % 1 ~= 0 then -- has to be a integer (no decimals)
+    return nil, "must be a whole number"
+  end
+  if number >= 1 and number <= 65535 then -- has to be in the network port range (1-65535)
+    return Value
+  end
+
+  return nil, "must be a valid port number (1-65535)"
+end
+
 Validators.enum = function(Value, Variable)
   Value = trim(Value):lower()
 
