@@ -12,13 +12,15 @@ RUN apk add --no-cache \
   gcc \
   make \
   bsd-compat-headers \
-  m4
+  m4 \
+  build-base \
+  zlib-dev
 
 WORKDIR /urler
 
-RUN luarocks-5.4 install http --tree=lua_rocks && \
-  luarocks-5.4 install lua-cjson --tree=lua_rocks && \
-  luarocks-5.4 install lsqlite3 --tree=lua_rocks
+RUN luarocks-5.4 install lua-cjson --tree=lua_rocks && \
+  luarocks-5.4 install lsqlite3 --tree=lua_rocks && \
+  luarocks-5.4 install pegasus --tree=lua_rocks
 
 COPY ./entrypoint.sh /urler/entrypoint.sh
 RUN chmod +x /urler/entrypoint.sh
