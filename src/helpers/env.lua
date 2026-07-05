@@ -1,6 +1,6 @@
-local Validators = require("helpers.validators")
+local validators = require("helpers.validators")
 
-local Variables = {}
+local variables = {}
 
 local EnvVariables = {
   {
@@ -26,26 +26,26 @@ local EnvVariables = {
   }
 }
 
-for _, Variable in ipairs(EnvVariables) do
-  local Value = os.getenv(Variable.EnvName)
+for _, variable in ipairs(EnvVariables) do
+  local Value = os.getenv(variable.EnvName)
 
   if not Value then
-    error(string.format("Environment variable '%s' is not set.", Variable.EnvName))
+    error(string.format("Environment variable '%s' is not set.", variable.EnvName))
   end
 
-  local Validator = Validators[Variable.Type]
+  local Validator = validators[variable.Type]
 
   if not Validator then
-    error(string.format("Unknown validator '%s'.", Variable.Type))
+    error(string.format("Unknown validator '%s'.", variable.Type))
   end
 
-  local Normalized, Error = Validator(Value, Variable)
+  local Normalized, Error = Validator(Value, variable)
 
   if not Normalized then
-    error(string.format("Invalid value for '%s': %s", Variable.EnvName, Error))
+    error(string.format("Invalid value for '%s': %s", variable.EnvName, Error))
   end
 
-  Variables[Variable.VariableName] = Normalized
+  variables[variable.VariableName] = Normalized
 end
 
-return Variables
+return variables

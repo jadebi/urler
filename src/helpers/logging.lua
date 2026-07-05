@@ -1,8 +1,9 @@
 local cjson = require("cjson")
-local Env = require("helpers.env")
+local env = require("helpers.env")
+-- local utils = require("helpers.utils")
 -- Uncommenting the 'require utils' will produce a Stack Overflow!
 -- Wow, why did I get so excited the first time I got this error 🤣?
--- local utils = require("helpers.utils")
+
 
 local logger = {}
 
@@ -20,15 +21,15 @@ end
 
 local function WriteLogLine(InputLevel, InputMessage, InputContext)
   local LogEntry = {
-    time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+    Time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
     Level = InputLevel,
     Message = InputMessage,
     Context = InputContext or nil
   }
 
-  if Env.LogFormat == "json" then
+  if env.LogFormat == "json" then
     print(cjson.encode(LogEntry))
-  elseif Env.LogFormat == "text" then
+  elseif env.LogFormat == "text" then
     if InputContext then
       ContextString = FormatContext(LogEntry.Context)
     else
@@ -36,7 +37,7 @@ local function WriteLogLine(InputLevel, InputMessage, InputContext)
     end
 
     print(string.format("[%s] [%s] %s %s",
-      LogEntry.time,
+      LogEntry.Time,
       LogEntry.Level,
       LogEntry.Message,
       ContextString
@@ -62,7 +63,7 @@ function logger.fatal(Message, Context)
 end
 
 function logger.debug(Message, Context)
-  if Env.Debug then
+  if env.Debug then
     WriteLogLine("DEBUG", Message, Context)
   end
 end

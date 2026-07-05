@@ -1,5 +1,7 @@
-local log = require("logging")
+local log = require("helpers.logging")
 local FallbackLogFormat = os.getenv("FB_LOG_FORMAT")
+
+log.debug("this is a test debug message")
 
 local utils = {}
 
