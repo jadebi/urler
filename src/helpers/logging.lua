@@ -20,7 +20,7 @@ end
 
 local function WriteLogLine(InputLevel, InputMessage, InputContext)
   local LogEntry = {
-    time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+    Time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
     Level = InputLevel,
     Message = InputMessage,
     Context = InputContext or nil
@@ -36,7 +36,7 @@ local function WriteLogLine(InputLevel, InputMessage, InputContext)
     end
 
     print(string.format("[%s] [%s] %s %s",
-      LogEntry.time,
+      LogEntry.Time,
       LogEntry.Level,
       LogEntry.Message,
       ContextString

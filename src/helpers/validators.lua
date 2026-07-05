@@ -1,4 +1,4 @@
-local Validators = {}
+local validators = {}
 
 -- Okay, so I gotta be honest here...
 -- I did not write the regexes myself... I copied them from different Stack Overflow threads
@@ -13,34 +13,34 @@ local Validators = {}
 -- %.   | a literal '.'
 -- $    | end of the string
 
-local function trim(Value)
-  return Value:match("^%s*(.-)%s*$")
+local function trim(value)
+  return value:match("^%s*(.-)%s*$")
 end
 
-Validators.string = function(Value)
-  Value = trim(Value)
+validators.string = function(value)
+  value = trim(value)
 
-  if Value == "" then
+  if value == "" then
     return nil, "must not be empty"
   end
-  return Value
+  return value
 end
 
-Validators.bool = function(Value)
-  Value = trim(Value):lower()
+validators.bool = function(value)
+  value = trim(value):lower()
 
-  if Value == "true" then
+  if value == "true" then
     return true
-  elseif Value == "false" then
+  elseif value == "false" then
     return false
   end
   return nil, "must be 'true' or 'false'"
 end
 
-Validators.number = function(Value)
-  Value = trim(Value)
+validators.number = function(value)
+  value = trim(value)
 
-  local number = tonumber(Value)
+  local number = tonumber(value)
 
   if not number then
     return nil, "must be a number"
@@ -48,11 +48,11 @@ Validators.number = function(Value)
   return number
 end
 
-Validators.url = function(Value)
-  Value = trim(Value)
-  if Value:match("^https://[%w%-%.]+") or
-      Value:match("^http://[%w%-%.]+") then
-    return Value
+validators.url = function(value)
+  value = trim(value)
+  if value:match("^https://[%w%-%.]+") or
+      value:match("^http://[%w%-%.]+") then
+    return value
   end
 
   return nil, "must be a valid HTTP or HTTPS URL"
@@ -84,7 +84,7 @@ Validators.enum = function(Value, Variable)
     end
   end
 
-  return nil, ("must be one of: %s"):format(table.concat(Variable.Values, ", "))
+  return nil, ("must be one of: %s"):format(table.concat(variable.values, ", "))
 end
 
-return Validators
+return validators
