@@ -1,11 +1,12 @@
 --local sqlite3 = require("lsqlite3")
-local Env = require("helpers.env")
+-- local utils = require("helpers.utils")
+local ENV = require("helpers.env")
 local log = require("helpers.logging")
 
-log.debug(Env.DataFolder)
-log.debug(Env.Debug)
-log.debug(Env.BaseUrl)
-log.debug(Env.LogFormat)
+log.debug(ENV.DataFolder)
+log.debug(ENV.Debug)
+log.debug(ENV.BaseUrl)
+log.debug(ENV.LogFormat)
 log.info("Hello! This is a friendly log message 😜!", {
   script = "main.lua",
   meaning = "I have no idea...",
