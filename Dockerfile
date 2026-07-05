@@ -16,13 +16,18 @@ RUN apk add --no-cache \
 
 WORKDIR /urler
 
-COPY ./src .
+RUN luarocks-5.4 install http --tree=lua_rocks && \
+  luarocks-5.4 install lua-cjson --tree=lua_rocks && \
+  luarocks-5.4 install lsqlite3 --tree=lua_rocks
+
 COPY ./entrypoint.sh /urler/entrypoint.sh
 RUN chmod +x /urler/entrypoint.sh
 
-RUN luarocks-5.4 install http --tree=lua_rocks
-RUN luarocks-5.4 install lua-cjson --tree=lua_rocks
-RUN luarocks-5.4 install lsqlite3 --tree=lua_rocks
+# we do this last so everything else can be cached.
+# This makes builds ALOT faster, because the luarocks
+# installation takes pretty long each time.
+COPY ./src .
+
 
 # This image will run the actual code
 # A small and minimal alpine image with only a few packages
@@ -39,9 +44,6 @@ RUN adduser -D -h /urler urler
 
 WORKDIR /urler
 
-# Copy over the nessesary files from the 'builder' container
-COPY --from=builder /urler /urler
-
 EXPOSE 8080
 
 ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;/urler/helpers/?.lua;;"
@@ -52,6 +54,9 @@ ENV DEFAULT_DATA_FOLDER="/urler/data"
 ENV DEFAULT_BASE_URL="http://localhost"
 ENV DEFAULT_LOG_FORMAT="text"
 ENV DEFAULT_DEBUG="false"
+
+# Copy over the nessesary files from the 'builder' container
+COPY --from=builder /urler /urler
 
 ENTRYPOINT [ "/urler/entrypoint.sh" ]
 
