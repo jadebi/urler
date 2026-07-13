@@ -1,1 +1,12 @@
+* text=auto eol=lf
+
 *.sh text eol=lf
+*.lua text eol=lf
+*.conf text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.md text diff=markdown
+
+*.so binary
+*.dll binary
+*.dylib binary

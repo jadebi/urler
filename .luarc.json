@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "runtime.builtin": {
+    "basic": "enable",
+    "bit": "enable",
+    "ffi": "enable",
+    "jit": "enable"
+  },
+  "workspace.checkThirdParty": "Apply",
+  "workspace.library": [
+        "${3rd}/OpenResty/library"
+    ],
+  "diagnostics.globals": [
+    "ngx",
+    "ndk"
+  ],
+  "diagnostics.disable": [
+    "undefined-field"
+  ],
+  "format.enable": false,
+  "completion.enable": true,
+  "hover.viewPortSize": 10
+}

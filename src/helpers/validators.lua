@@ -84,7 +84,7 @@ validators.enum = function(Value, Variable)
     end
   end
 
-  return nil, ("must be one of: %s"):format(table.concat(Variable.values, ", "))
+  return nil, ("must be one of: %s"):format(table.concat(Variable.Values, ", "))
 end
 
 return validators

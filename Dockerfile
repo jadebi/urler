@@ -18,35 +18,34 @@ RUN apk add --no-cache \
 
 WORKDIR /urler
 
-RUN luarocks-5.4 install lua-cjson --tree=lua_rocks && \
-  luarocks-5.4 install lsqlite3 --tree=lua_rocks && \
-  luarocks-5.4 install pegasus --tree=lua_rocks
+RUN luarocks-5.4 install lua-cjson --tree=lua_rocks \
+  && luarocks-5.4 install lsqlite3 --tree=lua_rocks \
+  && luarocks-5.4 install pegasus --tree=lua_rocks
 
 COPY ./entrypoint.sh /urler/entrypoint.sh
 RUN chmod +x /urler/entrypoint.sh
 
 
 # This image will run the actual code
-# A small and minimal alpine image with only a few packages
-FROM alpine
+FROM openresty/openresty:alpine
 
 RUN apk add --no-cache \
-  lua5.4 \
   libssl3 \
   libcrypto3 \
   sqlite-libs \
-  su-exec
+  su-exec \
+  curl
 
 WORKDIR /urler
 
-RUN adduser -D -h /urler urler 
+RUN adduser -D -h /urler urler
+RUN mkdir -p /urler/data /urler/logs
 
 EXPOSE 8080
 
-# custom lua paths because we install the rocks in the 
-# working directory instead of globally.
-ENV LUA_PATH="/urler/lua_rocks/share/lua/5.4/?.lua;/urler/lua_rocks/share/lua/5.4/?/init.lua;/urler/helpers/?.lua;;"
-ENV LUA_CPATH="/urler/lua_rocks/lib/lua/5.4/?.so;;"
+# Lua paths for OpenResty (LuaJIT)
+ENV LUA_PATH="/urler/?.lua;/urler/helpers/?.lua;;"
+ENV LUA_CPATH=";;"
 
 # Fallbacks (get applied in entrypoint.sh)
 ENV DEFAULT_DATA_FOLDER="/urler/data"
@@ -56,13 +55,13 @@ ENV DEFAULT_LOG_FORMAT="text"
 ENV DEFAULT_DEBUG="false"
 
 # copy over the nessesary files from the 'builder' container
-COPY --from=builder /urler /urler
+COPY --from=builder /urler/entrypoint.sh /urler/entrypoint.sh
 
-# we copy the source files in prod because we dont actually
-# need them in build and this way we can improve build
-# speeds even more! 
+# copy nginx config and source files
+COPY ./nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
 COPY ./src .
 
-ENTRYPOINT [ "/urler/entrypoint.sh" ]
+RUN chown -R urler:urler /urler
 
-CMD ["lua5.4", "main.lua"]
+ENTRYPOINT [ "/urler/entrypoint.sh" ]
+CMD ["/usr/local/openresty/bin/openresty", "-e", "/urler/logs/error.log", "-g", "daemon off;"]
