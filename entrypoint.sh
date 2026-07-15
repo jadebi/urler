@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -e
 
 # Overwriting with default values in case they
@@ -9,19 +9,37 @@ DATA_FOLDER="${DATA_FOLDER:-$DEFAULT_DATA_FOLDER}"
 LOG_FORMAT="${LOG_FORMAT:-$DEFAULT_LOG_FORMAT}"
 DEBUG="${DEBUG:-$DEFAULT_DEBUG}"
 
-Permissions=$(stat -c "%a" "$DATA_FOLDER")
 UrlerId=$(id -u "urler")
-OwnerId=$(stat -c "%u" "$DATA_FOLDER")
+Folders=(
+  "/urler/logs"
+  "${DATA_FOLDER}"
+)
 
-if [ "$UrlerId" -ne "$OwnerId" ]; then
-  echo "Fixing owner for $DATA_FOLDER (was $OwnerId)"
-  chown -R $UrlerId:$UrlerId "$DATA_FOLDER"
-fi
+for Folder in "${Folders[@]}"; do
+  if [[ ! -d "${Folder}" ]]; then
+    echo "Creating ${Folder}"
+    mkdir "${Folder}"
+  else
+    echo "${Folder} exists"
+  fi
+done
 
-if [ "$Permissions" != "770" ]; then
-  echo "Fixing permissions for $DATA_FOLDER (was $Permissions)"
-  chmod -R 770 "$DATA_FOLDER"
-fi
+for Folder in "${Folders[@]}"; do
+  Permissions=$(stat -c "%a" "$Folder")
+  OwnerId=$(stat -c "%u" "$Folder")
+
+  if [ "$UrlerId" -ne "$OwnerId" ]; then
+    echo "Fixing owner for $Folder"
+    chown -R $UrlerId:$UrlerId "$Folder"
+  fi
+
+  if [ "$Permissions" != "770" ]; then
+    echo "Fixing permissions for $Folder"
+    chmod -R 770 "$Folder"
+  fi
+done
+
+
 
 echo "Starting main (permissions are ok)"
 

@@ -1,5 +1,5 @@
 # This image will only be used for installing the dependencies and building them
-# Useful for image size & performance optimization 
+# Useful for image size & performance optimization
 FROM alpine AS builder
 
 RUN apk add --no-cache \
@@ -34,12 +34,12 @@ RUN apk add --no-cache \
   libcrypto3 \
   sqlite-libs \
   su-exec \
-  curl
+  curl \
+  bash
 
 WORKDIR /urler
 
 RUN adduser -D -h /urler urler
-RUN mkdir -p /urler/data /urler/logs
 
 EXPOSE 8080
 
@@ -54,7 +54,7 @@ ENV DEFAULT_PORT="8080"
 ENV DEFAULT_LOG_FORMAT="text"
 ENV DEFAULT_DEBUG="false"
 
-# copy over the nessesary files from the 'builder' container
+# copy over the nessesary files from 'builder'
 COPY --from=builder /urler/entrypoint.sh /urler/entrypoint.sh
 
 # copy nginx config and source files
