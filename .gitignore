@@ -44,3 +44,8 @@ lua_rocks
 *.db
 data
 *.lnk
+logs
+tmp
+temp
+test
+

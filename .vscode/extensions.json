@@ -2,6 +2,6 @@
   "recommendations": [
     "sumneko.lua",
     "JohnnyMorganz.stylua",
-    "ms-azuretools.vscode-docker"
+    "ahmadalli.vscode-nginx-conf"
   ]
 }

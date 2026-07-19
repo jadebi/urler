@@ -1,4 +1,4 @@
-local validators = require("helpers.validators")
+local validators = require("utils.validators")
 
 local variables = {}
 

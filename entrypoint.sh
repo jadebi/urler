@@ -12,6 +12,7 @@ DEBUG="${DEBUG:-$DEFAULT_DEBUG}"
 UrlerId=$(id -u "urler")
 Folders=(
   "/urler/logs"
+  "/urler/tmp"
   "${DATA_FOLDER}"
 )
 
@@ -38,8 +39,6 @@ for Folder in "${Folders[@]}"; do
     chmod -R 770 "$Folder"
   fi
 done
-
-
 
 echo "Starting main (permissions are ok)"
 

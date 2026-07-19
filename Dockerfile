@@ -1,51 +1,32 @@
-# This image will only be used for installing the dependencies and building them
-# Useful for image size & performance optimization
-FROM alpine AS builder
-
-RUN apk add --no-cache \
-  lua5.4 \
-  lua5.4-dev \
-  luarocks \
-  musl-dev \
-  openssl-dev \
-  sqlite-dev \
-  gcc \
-  make \
-  bsd-compat-headers \
-  m4 \
-  build-base \
-  zlib-dev
+﻿FROM openresty/openresty:alpine-fat AS builder
 
 WORKDIR /urler
 
-RUN luarocks-5.4 install lua-cjson --tree=lua_rocks \
-  && luarocks-5.4 install lsqlite3 --tree=lua_rocks \
-  && luarocks-5.4 install pegasus --tree=lua_rocks
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-cjson
+RUN apk add --no-cache sqlite-dev && /usr/local/openresty/luajit/bin/luarocks install lsqlite3
 
 COPY ./entrypoint.sh /urler/entrypoint.sh
 RUN chmod +x /urler/entrypoint.sh
 
 
-# This image will run the actual code
 FROM openresty/openresty:alpine
 
-RUN apk add --no-cache \
-  libssl3 \
-  libcrypto3 \
-  sqlite-libs \
-  su-exec \
-  curl \
-  bash
-
 WORKDIR /urler
+RUN mkdir tmp logs
 
 RUN adduser -D -h /urler urler
+RUN apk add --no-cache sqlite-dev bash su-exec
 
-EXPOSE 8080
+COPY ./src /urler
 
-# Lua paths for OpenResty (LuaJIT)
-ENV LUA_PATH="/urler/?.lua;/urler/helpers/?.lua;;"
-ENV LUA_CPATH=";;"
+COPY --from=builder /usr/local/openresty/luajit/lib/luarocks/rocks-5.1/ \
+  /usr/local/openresty/luajit/lib/luarocks/rocks-5.1/
+COPY --from=builder /urler/entrypoint.sh /urler/entrypoint.sh
+
+RUN chown -R urler:urler /urler
+# RUN chown -R urler:urler /usr/local/openresty/nginx/logs
+
+COPY urler.conf /usr/local/openresty/nginx/conf/nginx.conf
 
 # Fallbacks (get applied in entrypoint.sh)
 ENV DEFAULT_DATA_FOLDER="/urler/data"
@@ -54,14 +35,10 @@ ENV DEFAULT_PORT="8080"
 ENV DEFAULT_LOG_FORMAT="text"
 ENV DEFAULT_DEBUG="false"
 
-# copy over the nessesary files from 'builder'
-COPY --from=builder /urler/entrypoint.sh /urler/entrypoint.sh
+ENV LUA_PATH="/urler/?.lua;/urler/helpers/?.lua;;"
+ENV LUA_CPATH=";;"
 
-# copy nginx config and source files
-COPY ./nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
-COPY ./src .
-
-RUN chown -R urler:urler /urler
+EXPOSE 8080
 
 ENTRYPOINT [ "/urler/entrypoint.sh" ]
 CMD ["/usr/local/openresty/bin/openresty", "-e", "/urler/logs/error.log", "-g", "daemon off;"]
