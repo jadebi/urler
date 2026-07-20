@@ -5,8 +5,8 @@ WORKDIR /urler
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-cjson
 RUN apk add --no-cache sqlite-dev && /usr/local/openresty/luajit/bin/luarocks install lsqlite3
 
-COPY ./entrypoint.sh /urler/entrypoint.sh
-RUN chmod +x /urler/entrypoint.sh
+COPY ./init.sh /urler/init.sh
+RUN chmod +x /urler/init.sh
 
 
 FROM openresty/openresty:alpine
@@ -21,14 +21,14 @@ COPY ./src /urler
 
 COPY --from=builder /usr/local/openresty/luajit/lib/luarocks/rocks-5.1/ \
   /usr/local/openresty/luajit/lib/luarocks/rocks-5.1/
-COPY --from=builder /urler/entrypoint.sh /urler/entrypoint.sh
+COPY --from=builder /urler/init.sh /urler/init.sh
 
 RUN chown -R urler:urler /urler
 # RUN chown -R urler:urler /usr/local/openresty/nginx/logs
 
 COPY urler.conf /usr/local/openresty/nginx/conf/nginx.conf
 
-# Fallbacks (get applied in entrypoint.sh)
+# Fallbacks (get applied in init.sh)
 ENV DEFAULT_DATA_FOLDER="/urler/data"
 ENV DEFAULT_BASE_URL="http://localhost"
 ENV DEFAULT_PORT="8080"
@@ -40,5 +40,5 @@ ENV LUA_CPATH=";;"
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/urler/entrypoint.sh" ]
+ENTRYPOINT [ "/urler/init.sh" ]
 CMD ["/usr/local/openresty/bin/openresty", "-e", "/urler/logs/error.log", "-g", "daemon off;"]
