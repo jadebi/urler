@@ -22,7 +22,7 @@ log () {
 
   if [[ "$LOG_FORMAT" == "json" ]]; then
     # JSON without a Context field (not needed atm.)
-    printf '{"Time":"%s","Level":"%s","Message":"(init.sh) %s"}\n' "$timestamp" "$level" "$message"
+    printf '{"time":"%s","level":"%s","message":"(init.sh) %s"}\n' "$timestamp" "$level" "$message"
   else
     # format: [<timestamp>] [<level>] (init.sh) <message>
     printf "[%s] [%s] (init.sh) %s \n" "$timestamp" "$level" "$message"
@@ -31,8 +31,8 @@ log () {
 
 UrlerId=$(id -u "urler")
 Folders=(
-  "/urler/logs"
-  "/urler/tmp"
+  # "/urler/logs"
+  # "/urler/tmp"
   "${DATA_FOLDER}"
 )
 
@@ -62,4 +62,4 @@ log "INFO" "Init complete, starting OpenResty"
 
 #* Start main
 # try with `su-exec`; if fails, just do `exec` (may happen when not using `urler` user)
-su-exec urler "$@" || exec "$@"
+exec "$@"

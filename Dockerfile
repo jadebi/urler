@@ -12,7 +12,7 @@ RUN chmod +x /urler/init.sh
 FROM openresty/openresty:alpine
 
 WORKDIR /urler
-RUN mkdir tmp logs
+RUN mkdir tmp logs data
 
 RUN adduser -D -h /urler urler
 RUN apk add --no-cache sqlite-dev bash su-exec

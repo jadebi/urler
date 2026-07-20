@@ -1,8 +1,8 @@
 local cjson = require("cjson")
 local ENV = require("utils.env")
--- local utils = require("utils.utils")
--- Uncommenting the 'require utils' will produce a Stack Overflow!
--- Wow, why did I get so excited the first time I got this error 🤣?
+
+-- cjson.encode_escape_slash(false)
+cjson.encode_escape_forward_slash(false)
 
 local Logger = {}
 
@@ -26,10 +26,10 @@ end
 
 local function WriteLogLine(InputLevel, InputMessage, InputContext)
   local LogEntry = {
-    Time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
-    Level = InputLevel,
-    Message = InputMessage,
-    Context = InputContext or nil
+    time = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+    level = InputLevel,
+    message = InputMessage,
+    context = InputContext or nil
   }
 
   if ENV.LogFormat == "json" then
@@ -39,13 +39,13 @@ local function WriteLogLine(InputLevel, InputMessage, InputContext)
     local ContextString = ""
 
     if InputContext then
-      ContextString = FormatContext(LogEntry.Context)
+      ContextString = FormatContext(LogEntry.context)
     end
 
     WriteOutput(string.format("[%s] [%s] %s %s",
-      LogEntry.Time,
-      LogEntry.Level,
-      LogEntry.Message,
+      LogEntry.time,
+      LogEntry.level,
+      LogEntry.message,
       ContextString
     ))
   end

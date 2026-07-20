@@ -12,7 +12,7 @@ services:
       BASE_URL: "http://localhost"
       PORT: "8080"
       DATA_FOLDER: "/urler/data"
-      LOG_FORMAT: "text" # json, text, maybe more in the future
+      LOG_FORMAT: "json" # json, text, maybe more in the future
       DEBUG: "true"
       # Future
       # METRICS: "true" # true / false

@@ -1,28 +1,24 @@
-document.getElementById('submitBtn').addEventListener('click', function () {
-  const usernameValue = document.getElementById('username').value;
-  const scoreValue = parseInt(document.getElementById('score').value, 10);
-  const responseDiv = document.getElementById('response');
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault();
 
-  responseDiv.textContent = 'Sending...';
+  console.log("submit intercepted");
 
-  const payload = {
-    username: usernameValue,
-    score: scoreValue
-  };
+  const url = document.getElementById("url").value;
 
-  fetch('/api/submit', {
-    method: 'POST',
-    headers: {
-      // By changing this to text/plain, Pegasus leaves the raw body alone
-      'Content-Type': 'text/plain'
-    },
-    body: JSON.stringify(payload)
+  fetch("/api/shorten", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: url }),
   })
-    .then(res => res.json())
-    .then(data => {
-      responseDiv.textContent = JSON.stringify(data, null, 2);
+    .then((res) => res.json())
+    .then((data) => {
+      document.getElementById("response").textContent = JSON.stringify(
+        data,
+        null,
+        2,
+      );
     })
-    .catch(err => {
-      responseDiv.textContent = 'Error: ' + err.message;
+    .catch((err) => {
+      document.getElementById("response").textContent = "Error: " + err.message;
     });
 });

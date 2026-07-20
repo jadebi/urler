@@ -1,6 +1,6 @@
 -- local log = require("utils.logging")
 
-local utils = {}
+local helpers = {}
 
 -- function utils.FormatContext(Context)
 --   if not Context then
@@ -18,4 +18,4 @@ local utils = {}
 --   return " | '" .. table.concat(Output, "', '")
 -- end
 
-return utils
+return helpers
