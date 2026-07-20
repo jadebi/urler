@@ -2,6 +2,7 @@
   "recommendations": [
     "sumneko.lua",
     "JohnnyMorganz.stylua",
-    "ahmadalli.vscode-nginx-conf"
+    "ahmadalli.vscode-nginx-conf",
+    "aaron-bond.better-comments"
   ]
 }

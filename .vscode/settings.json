@@ -15,5 +15,36 @@
   },
   "files.associations": {
     "*.conf": "nginx"
-  }
+  },
+  "better-comments.tags": [
+    {
+      //! Important information
+      "tag": "!",
+      "color": "#E5C07B",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      // TODO items
+      "tag": "todo",
+      "color": "#61AFEF",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      //* Title of a comment block
+      "tag": "*",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": true,
+      "italic": false
+    }
+  ]
 }
