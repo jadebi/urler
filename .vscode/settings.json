@@ -39,7 +39,7 @@
     },
     {
       //* Title of a comment block
-      "tag": "*",
+      "tag": " *",
       "strikethrough": false,
       "underline": false,
       "backgroundColor": "transparent",
