@@ -1,0 +1,10 @@
+﻿Table urls [headercolor: #175e7a] {
+	id integer [ pk, increment, not null, unique ]
+	date datetime [ not null ]
+	ip text(65535) [ not null, note: 'This will be the fk for a users table in a later stage of development' ]
+	short text(65535) [ pk, not null, unique ]
+	url text(65535) [ not null, unique ]
+	metaUrl text(65535) [ not null ]
+	metaHtml text(65535) [ not null ]
+	metaFetch datetime
+}

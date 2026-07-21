@@ -8,8 +8,10 @@ Local testing: `docker run --rm --name alpine-temp -it alpine:3.21 sh -c "apk ad
 Roadmap
 - Self signed Certificates
 - Cloudflare Turnstile
-- Counting of URLs per IP
+- User System
+  - Registration
+  - URL management
+  - Admin Dashboard
 - URL limit per client
 
-
-database scheme: https://www.drawdb.app/editor/diagrams/1a423da1-d069-454e-a4a6-f724c03e44cc
+database scheme: `https://www.drawdb.app/`, manually import the `database.dbml` file into the website
