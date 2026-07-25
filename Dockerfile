@@ -1,4 +1,4 @@
-﻿FROM openresty/openresty:alpine-fat AS builder
+﻿FROM openresty/openresty:1.31-alpine-fat AS builder
 
 WORKDIR /urler
 
@@ -10,7 +10,7 @@ RUN chmod +x /urler/init.sh /urler/generate_config.sh
 
 
 
-FROM openresty/openresty:alpine
+FROM openresty/openresty:1.31-alpine-slim
 
 WORKDIR /urler
 
