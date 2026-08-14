@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+# * Applying fallbacks
 # Overwriting with default values in case they
 # were not specified in the docker-compose file
 export BASE_URL="${BASE_URL:-$DEFAULT_BASE_URL}"
@@ -28,7 +29,7 @@ log () {
 
   timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-  if [[ "$level" == "DEBUG" && "$DEBUG" != "true" ]]; then
+  if [[ "$level" != "DEBUG" || "$DEBUG" == "true" ]]; then
     if [[ "$LOG_FORMAT" == "json" ]]; then
       # JSON without a Context field (not needed atm.)
       printf '{"time":"%s","level":"%s","message":"(%s) %s"}\n' "$timestamp" "$level" "$caller" "$message"
@@ -48,9 +49,9 @@ LUAEOF
 
 UrlerId=$(id -u "urler")
 Folders=(
-  # "/urler/logs"
-  # "/urler/tmp"
+  "/urler/logs"
   "${DATA_FOLDER}"
+  # "/urler/tmp"
 )
 
 for Folder in "${Folders[@]}"; do

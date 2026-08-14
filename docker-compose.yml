@@ -6,8 +6,8 @@ services:
       - '8080:8080'
     volumes:
       - ./data:/urler/data
-      - ./logs:/urler/logs
-      - ./temp:/urler/tmp
+      # - ./logs:/urler/logs
+      # - ./temp:/urler/tmp
     environment:
       BASE_URL: "http://localhost"
       PORT: "8080"

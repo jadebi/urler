@@ -1,0 +1,73 @@
+/* Selection */
+::selection {
+  background: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+}
+
+/* Scrollbar */
+html {
+  scrollbar-color: var(--pico-muted-color) var(--pico-muted-background-color);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pico-muted-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pico-muted-color);
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pico-color);
+}
+
+/* Custom styles */
+#theme-dropdown {
+  display: inline-block;
+}
+#theme-dropdown > summary + ul {
+  right: 0;
+  left: auto;
+  width: 100%;
+}
+
+main.container {
+  max-width: 48rem;
+}
+/* Class for images that should look similar to the Tabler Webfont Icons */
+.ti-img {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: text-top;
+}
+
+.url-error {
+  color: var(--pico-form-element-invalid-active-border-color);
+}
+
+#advanced-summary {
+  cursor: pointer;
+  max-width: fit-content;
+  color: var(--pico-primary);
+}
+#advanced-summary::before {
+  font-family: "tabler-icons";
+  content: "\ea61";
+  display: inline-block;
+  margin-right: 0.25rem;
+  transition: transform 0.2s;
+  font-size: 1em;
+}
+
+#advanced-content {
+  display: none;
+}
+
+#form:has(#advanced-toggle:checked) #advanced-content {
+  display: block;
+}
