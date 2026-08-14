@@ -80,6 +80,6 @@ log "INFO" "Generating nginx config file..."
 
 log "INFO" "Init complete, starting OpenResty"
 
-#* Start main
+# * Start main
 # try with `su-exec`; if fails, just do `exec` (may happen when not using `urler` user)
 exec "$@"
