@@ -40,6 +40,12 @@ lua_rocks
 *.x86_64
 *.hex
 
+# Nuxt frontend build artifacts
+frontend/.nuxt
+frontend/.output
+frontend/node_modules
+frontend/.env
+
 # Files generated with testing / development
 *.db
 data
