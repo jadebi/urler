@@ -39,6 +39,7 @@ html {
 main.container {
   max-width: 48rem;
 }
+
 /* Class for images that should look similar to the Tabler Webfont Icons */
 .ti-img {
   width: 1.5em;
@@ -48,26 +49,4 @@ main.container {
 
 .url-error {
   color: var(--pico-form-element-invalid-active-border-color);
-}
-
-#advanced-summary {
-  cursor: pointer;
-  max-width: fit-content;
-  color: var(--pico-primary);
-}
-#advanced-summary::before {
-  font-family: "tabler-icons";
-  content: "\ea61";
-  display: inline-block;
-  margin-right: 0.25rem;
-  transition: transform 0.2s;
-  font-size: 1em;
-}
-
-#advanced-content {
-  display: none;
-}
-
-#form:has(#advanced-toggle:checked) #advanced-content {
-  display: block;
 }

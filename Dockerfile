@@ -1,5 +1,16 @@
 ﻿ARG OPENRESTY_VER=1.31
 
+FROM node:22-alpine AS frontend-builder
+
+WORKDIR /app
+
+COPY frontend/package*.json ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run generate
+
+
 # FAT builder image
 FROM openresty/openresty:${OPENRESTY_VER}-alpine-fat AS builder
 
@@ -32,7 +43,8 @@ RUN apk add --no-cache \
 
 # copy all source code
 COPY ./src /urler
-COPY ./frontend /urler/frontend
+
+COPY --from=frontend-builder /app/.output/public /urler/frontend
 
 # copy luarocks and init scripts
 COPY --from=builder \
