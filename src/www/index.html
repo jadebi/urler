@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🔗 urler</title>
+  <title>urler</title>
   <!-- CDN dependencies -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.45.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tablericons-webfont@3.45.0/dist/tabler-icons.min.css">
   <!-- Themes -->
   <link rel="stylesheet" href="css/themes/light.css" />
   <link rel="stylesheet" href="css/themes/dark.css" />
@@ -17,6 +17,13 @@
   <script src="js/initTheme.js"></script>
   <script src="js/theme.js" defer></script>
   <script type="module" src="js/script.js"></script>
+  <!-- Favicons & Icons  -->
+  <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="shortcut icon" href="icons/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="urler" />
+  <link rel="manifest" href="icons/site.webmanifest" />
 </head>
 
 <body>
@@ -41,7 +48,7 @@
 
   <main class="container">
     <section>
-      <h2>urler</h2>
+      <h2><img src="icons/logo.svg" alt="urler logo" class="ti-img"> urler</h2>
       <p>
         Enter a URL to shorten
       </p>
@@ -56,16 +63,12 @@
       </label>
       <fieldset>
         <fieldset role="group" id="response-status">
-          <fieldset>
-            <input type="text" name="url" placeholder="URL to shorten" aria-label="url" required>
-            <small class="url-error" id="url-error" style="display: none;"></small>
-          </fieldset>
+          <input type="text" name="url" placeholder="URL to shorten" aria-label="url" required>
           <input class="outline" type="submit" id="submit" value="Short!" disabled>
         </fieldset>
-        <fieldset id="advanced-content">
-          <input type="text" name="meta-url" placeholder="URL for META tags" aria-label="meta-url">
-          <small class="url-error" id="meta-url-error" style="display: none;"></small>
-        </fieldset>
+        <small class="url-error" id="url-error" style="display: none;"></small>
+        <input type="text" name="meta-url" placeholder="URL for META tags" aria-label="meta-url">
+        <small class="url-error" id="meta-url-error" style="display: none;"></small>
       </fieldset>
     </form>
   </main>
