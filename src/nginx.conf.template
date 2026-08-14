@@ -53,7 +53,7 @@ http {
 
     location / {
       index index.html;
-      root /urler/www;
+      root /urler/frontend;
     }
 
     location = /greetings {

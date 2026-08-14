@@ -32,6 +32,7 @@ RUN apk add --no-cache \
 
 # copy all source code
 COPY ./src /urler
+COPY ./frontend /urler/frontend
 
 # copy luarocks and init scripts
 COPY --from=builder \
